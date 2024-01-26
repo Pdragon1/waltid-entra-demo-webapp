@@ -1,10 +1,6 @@
-# Nuxt 3 Minimal Starter
+# Entra Demo Frontend & Backend
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
-
-## Setup
-
-Make sure to install the dependencies:
+## Setup locally
 
 ```bash
 # npm
@@ -16,8 +12,8 @@ pnpm install
 # yarn
 yarn install
 
-# bun
-bun install
+# bun         <---
+bun install # <---
 ```
 
 ## Development Server
@@ -35,7 +31,7 @@ pnpm run dev
 yarn dev
 
 # bun
-bun run dev
+bun dev # <---
 ```
 
 ## Production
@@ -53,7 +49,7 @@ pnpm run build
 yarn build
 
 # bun
-bun run build
+bun run build # <---
 ```
 
 Locally preview production build:
@@ -72,4 +68,8 @@ yarn preview
 bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Docker
+```bash
+docker build --progress=plain -f Dockerfile -t waltid/entra-demo-webapp-fronte
+nd  .
+```
