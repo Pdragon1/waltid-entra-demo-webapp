@@ -6,15 +6,16 @@ COPY package.json /build/
 WORKDIR /build
 RUN bun install
 
-COPY components/ pages/ public/ server/ .env *.vue *.ts *.js *.json /build/
+COPY . /build/
 RUN bun run build
 
 # RUN
-FROM docker.io/node:alpine
+FROM docker.io/oven/bun:alpine
 COPY --from=buildstage /build/.output/ /app
 
 WORKDIR /app
 
-EXPOSE 3000
-ENTRYPOINT node server/index.mjs
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "server/index.mjs" ]
 

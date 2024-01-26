@@ -1,0 +1,7 @@
+.idea
+.nuxt
+.output
+backend
+node_modules
+k8s.yaml
+README.md
