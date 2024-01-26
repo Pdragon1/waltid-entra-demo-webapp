@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
-        '@nuxtjs/tailwindcss',
+        '@unocss/nuxt',
         'nuxt-headlessui'
     ],
     runtimeConfig: {
