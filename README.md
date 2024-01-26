@@ -69,7 +69,20 @@ bun run preview
 ```
 
 ## Docker
+### Frontend
 ```bash
 docker build --progress=plain -f Dockerfile -t waltid/entra-demo-webapp-fronte
 nd  .
+```
+
+### Backend
+
+```bash
+cd backend
+docker build --progress plain -f Dockerfile -t waltid/entra-demo-webap
+p-backend .
+```
+
+```bash
+docker run -p 7777:7777 -v ./demo.conf:/backend/demo.conf waltid/entra-demo-webapp-backend
 ```

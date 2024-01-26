@@ -15,6 +15,7 @@ FROM docker.io/eclipse-temurin:21
 
 COPY --from=buildstage /backend/build/install/ /
 WORKDIR /backend
+RUN touch demo.conf
 
 EXPOSE 7777
 
