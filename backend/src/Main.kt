@@ -18,10 +18,7 @@ import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.put
+import kotlinx.serialization.json.*
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation.Plugin as ClientContentNegotiationPlugin
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation as ServerContentNegotiationPlugin
 
@@ -112,11 +109,12 @@ fun main(args: Array<String>) {
                         }))
                     }
                 )
+                val resp = http.post(config.verifierEndpointUrl) {
+                    setBody(entraReq)
+                }
 
                 context.respond(
-                    http.post(config.verifierEndpointUrl) {
-                        setBody(entraReq)
-                    }.body<JsonObject>()
+                    resp.runCatching { body<JsonObject>() }.getOrElse { error("Invalid response: ${resp.bodyAsText()}") }
                 )
             }
 
@@ -128,7 +126,10 @@ fun main(args: Array<String>) {
                 }
 
                 when {
-                    resp.status.isSuccess() -> context.respond(resp.status, resp.body<JsonObject>())
+                    resp.status.isSuccess() -> {
+                        val jsonResp = runCatching { resp.body<JsonElement>() }.getOrElse { error("Could not deserialize: ${resp.bodyAsText()}") }
+                        context.respond(resp.status, jsonResp)
+                    }
                     else -> context.respond(resp.status)
                 }
             }
