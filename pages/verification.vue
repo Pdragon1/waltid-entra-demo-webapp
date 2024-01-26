@@ -58,10 +58,12 @@ const isPending = ref(false)
 const url = ref("")
 const nonce = ref("")
 
+const backendHost = useRuntimeConfig().public.backendHost
+
 const receivedCredentials: Ref<Object | null> = ref(null)
 
 async function checkVerificationResult(): Promise<boolean> {
-    const response = await fetch(`http://localhost:7001/entra/status/${nonce.value}`)
+    const response = await fetch(`${backendHost}/entra/status/${nonce.value}`)
 
     if (response.status == 404) {
         return false
@@ -84,12 +86,6 @@ async function verify() {
         },
         "entraVerification": {
             "authority": "did:web:entra.walt.id",
-            "authorization": {
-                "clientId": "e50ceaa6-8554-4ae6-bfdf-fd95e2243ae0",
-                "clientSecret": "ctL8Q~Ezdrcrju85gEtvbCmQQDmm7bXjJKsdXbCr",
-                "tenantId": "8bc955d9-38fd-4c15-a520-0c656407537a",
-                "scope": "3db474b9-6a0c-4840-96ac-1fceb342124f/.default"
-            },
             "credentials": [
                 {
                    /* "acceptedIssuers": [
@@ -102,7 +98,7 @@ async function verify() {
         }
     }
 
-    const {data, pending, error, refresh} = await useFetch("http://localhost:7001/entra/verify", {
+    const {data, pending, error, refresh} = await useFetch(`${backendHost}/entra/verify`, {
         method: "POST",
         body: reqBody,
 

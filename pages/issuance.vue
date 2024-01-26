@@ -111,6 +111,8 @@ import {Bars3Icon, XMarkIcon} from '@heroicons/vue/24/outline'
 import {useFetch} from "#app";
 import QrcodeVue from 'qrcode.vue'
 
+const backendHost = useRuntimeConfig().public.backendHost
+
 const navigation = [
     {name: 'Product', href: '#'},
     {name: 'Features', href: '#'},
@@ -124,12 +126,6 @@ const isPending = ref(false)
 async function issue() {
 
     const reqBody = {
-        "authorization": {
-            "clientId": "e50ceaa6-8554-4ae6-bfdf-fd95e2243ae0",
-            "clientSecret": "ctL8Q~Ezdrcrju85gEtvbCmQQDmm7bXjJKsdXbCr",
-            "tenantId": "8bc955d9-38fd-4c15-a520-0c656407537a",
-            "scope": "3db474b9-6a0c-4840-96ac-1fceb342124f/.default"
-        },
         "data": {
             "authority": "did:web:entra.walt.id",
             "claims": {
@@ -141,7 +137,7 @@ async function issue() {
         }
     }
 
-    const {data: recvUrl, pending, error, refresh} = await useFetch("http://localhost:7000/entra/issue", {
+    const {data: recvUrl, pending, error, refresh} = await useFetch(`${backendHost}/entra/issue`, {
         method: "POST",
         body: reqBody,
 

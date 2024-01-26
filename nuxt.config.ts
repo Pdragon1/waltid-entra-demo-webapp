@@ -4,5 +4,10 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
         'nuxt-headlessui'
-    ]
+    ],
+    runtimeConfig: {
+        public: {
+            backendHost: "http://localhost:7777"
+        }
+    }
 })
