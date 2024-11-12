@@ -81,11 +81,14 @@ async function verify() {
     const reqBody = {
         "data": {
             "vc_policies": [
-                "expired", "not-before", { policy: "allowed-issuer", args: "did:web:entra.walt.id" }
+                "expired", "not-before",
+                { policy: "allowed-issuer", args: "did:web:verifiedid.entra.microsoft.com:a8671fa1-780f-4af1-8341-cd431da2c46d:356de688-3752-d83c-6225-9ae1005e2aeb" }
+                //{ policy: "allowed-issuer", args: "did:web:entra.walt.id" }
             ]
         },
         "entraVerification": {
-            "authority": "did:web:entra.walt.id",
+            //"authority": "did:web:entra.walt.id",
+            "authority": "did:web:verifiedid.entra.microsoft.com:a8671fa1-780f-4af1-8341-cd431da2c46d:356de688-3752-d83c-6225-9ae1005e2aeb",
             "credentials": [
                 {
                    /* "acceptedIssuers": [

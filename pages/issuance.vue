@@ -127,28 +127,36 @@ async function issue() {
 
     const reqBody = {
         "data": {
-            "authority": "did:web:entra.walt.id",
+            //"authority": "did:web:entra.walt.id",
+            "authority": "did:web:verifiedid.entra.microsoft.com:a8671fa1-780f-4af1-8341-cd431da2c46d:356de688-3752-d83c-6225-9ae1005e2aeb",
             "claims": {
                 "given_name": "Max",
                 "family_name": "Mustermann"
             },
-            "manifest": "https://verifiedid.did.msidentity.com/v1.0/tenants/8bc955d9-38fd-4c15-a520-0c656407537a/verifiableCredentials/contracts/133d7e92-d227-f74d-1a5b-354cbc8df49a/manifest",
+            "manifest": "https://verifiedid.did.msidentity.com/v1.0/tenants/a8671fa1-780f-4af1-8341-cd431da2c46d/verifiableCredentials/contracts/a1ef334a-a5a4-ab0c-47bb-29b7d84f6c9b/manifest",
             "type": "VerifiableCredential,MyID"
         }
     }
 
-    const {data: recvUrl, pending, error, refresh} = await useFetch(`${backendHost}/entra/issue`, {
+    const {data: recvUrl, status, error, refresh} = await useFetch(`${backendHost}/entra/issue`, {
         method: "POST",
         body: reqBody,
 
         onRequest({ request, options }) {
             isPending.value = true
         },
+        onRequestError({ request, options, error }) {
+            isPending.value = false
+            console.log("Request error: " + error)
+            window.alert("Request error: " + error)
+        },
         onResponse({ request, response, options }) {
             isPending.value = false
         },
         onResponseError({ request, response, options }) {
             isPending.value = false
+            console.log("Response error: " + error)
+            window.alert("Response error: " + error)
         }
     })
 
